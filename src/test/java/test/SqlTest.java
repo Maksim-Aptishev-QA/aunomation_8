@@ -5,11 +5,11 @@ import data.DataMySql;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import page.LoginPage;
-
 import static data.DataMySql.cleanDatabase;
-import static java.nio.channels.FileChannel.open;
+import static com.codeborne.selenide.Selenide.open;
 
-public class SqlTest {
+
+public class    SqlTest {
     @AfterAll
     static void teardown() {
         cleanDatabase();
@@ -17,7 +17,7 @@ public class SqlTest {
     }
 
     @Test
-    void successfulTestLogin() {
+    void LoginTest() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -28,7 +28,7 @@ public class SqlTest {
     }
 
     @Test
-    void randomUserTestError() {
+    void randomUserTest() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfoRandom();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -37,7 +37,7 @@ public class SqlTest {
     }
 
     @Test
-    void randomCodeTestError() {
+    void randomCodeTest() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
@@ -45,9 +45,9 @@ public class SqlTest {
         var verificationCode = DataHelper.verificationCodeGenerate();
         verificationPage.verifyButtonClick(verificationCode.getCode());
         verificationPage.errorNotificationVisible();
-
     }
 }
+
 
 
 
